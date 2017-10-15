@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../mainStyle.css">
+    <title>Guillaume Almyre</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Guillaume Almyre</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../../ARVR/index.html">AR-VR</a></li>
+            <li class="active"><a href="../index.html">SIA</a></li>
+          </ul>
+        </div><!-- navbar-collapse -->
+      </div><!-- container-fluid -->
+    </nav>
+    <div class="container">
+      <h1>TD1 - Echantillonnage</h1>
+
+      <h2>Intégration de Monte-Carlo 1D</h2>
+      <p>
+        Le but de cette section était de comprendre à quoi servait l'intégrateur de Monte-Carlo. Cette méthode permet d'approximer la valeur d'une intégrale en prenant un certain nombre
+        d'échantillons dans la population voulue et en en faisant la moyenne. Plus le nombre d'échantillons est élevée plus le résultat tend vers la valeur réelle de l'intégralle. On peut
+        voir sur le graphique suivant que l'estimation est assez proche de la valeur attendue.
+      </p>
+      <img src="td1_fig1.png" alt="">
+
+      <h2>Anti-Aliasing</h2>
+      <p>
+        Dans cette partie, on se propose d'utiliser la technique de Monte-Carlo pour diminuer l'aliasing. Pour ce faire, au lieu de lancer un rayon par pixel, on va lancer plusieurs rayons,
+        chacun dans une zone aléatoire du pixel et faire la moyenne de toutes les valeurs obtenues pour déterminer la couleur finale du pixel en question. Voici un extrait du code ainsi qu'une image
+        de résultat. Le fait de rajouter de l'aléatoire est appelé la stratification et ajoute encore à la qualité du rendu.
+      </p>
+      <img src="td1_fig2.png" alt="">
+      <p>8 rayons par pixel, non stratifié :</p>
+      <img src="td1_fig3.png" alt="">
+      <p>8 rayons par pixel, stratifié :</p>
+      <img src="td1_fig4.png" alt="">
+
+      <h2>Sources étendues</h2>
+      <p>Ici, il était question d'implémenter une area light. Jusqu'ici toutes les lumières n'étaient que des points dans l'espace. Une area light est représentée par une zone.
+      Au lieu de lancer un rayon d'ombre sur un seul point, on le lance donc dans un endroit aléatoire de la surface de l'area light. On obtient ce genre de résultats avec une area light
+      de taille 0.1,0.1 : </p>
+      <img src="td1_fig5.png" alt="">
+      <p>La partie suivante consistait à faire en sorte de pouvoir appliquer une texture sur l'area light. Le rayon d'ombre envoyé, si il atteignait la lumière, devait ensuite déterminer
+      quelle partie de la texture il avait atteint afin de pouvoir donner une couleur adéquate au pixel dont il était originaire. Il fallait donc, avec ce rayon d'ombre, se placer dans
+      le repère de l'area light pour trouver les coordonnées de la texture. Voici un extrait du code : </p>
+      <img src="td1_fig6.png" alt="">
+      <p>Voici un exemple de l'effet obtenu : </p>
+      <img src="td1_fig7.png" alt="">
+      <p>Je n'ai pas eu le temps de réaliser le bonus. Cependant, le principe est le même que pour la stratification de la partie précédente. On lancera plusieurs rayons d'ombre au lieu d'un,
+       de façon aléatoire. Et on fera une moyenne des valeurs obtenues pour déterminer la couleur du pixel voulu.</p>
+
+      <h2>Ambiante Occlusion</h2>
+
+      <p>Dans la première section de cette partie, il était question de transformer un échantillonnage de carré en échantillonnage de disque, puis d'hémisphère. Il fallait également
+      retourner la pdf de cet échantillonnage. Tous les échantillonnages ont été réalisés. Voici un exemple avec l'hémisphère pondérée par le cosinus : </p>
+      <img src="td1_fig8.png" alt="">
+      <img src="td1_fig9.png" alt="">
+
+      <p>Dans la deuxième partie, il fallait implémenter l'intégrateur ao (ambiant occlusion). Pour chaque point, on va lancer un certain nombre de rayons d'ombres dans l'hémisphère
+      centrée en ce point. On pourra ensuite faire la moyenne des valeurs obtenues pour déterminer la quantité de lumière incidente sur ce pixel. Voici le code permettant de réaliser cela :
+      </p>
+      <img src="td1_fig10.png" alt="">
+      <p>En utilisant l'hémisphère uniforme : </p>
+      <img src="td1_fig11.png" alt="">
+      <p>En utilisant l'hémisphère pondérée par le cosinus : </p>
+      <img src="td1_fig12.png" alt="">
+      <p>Il semble que la technique pondérée par le cosinus donne des réultats plus lisses et de meilleure qualité.</p>
+
+    </div><!-- container -->
+  </body>
+</html>

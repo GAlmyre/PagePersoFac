@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../mainStyle.css">
+    <title>Guillaume Almyre</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Guillaume Almyre</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../../ARVR/index.html">AR-VR</a></li>
+            <li class="active"><a href="../index.html">SIA</a></li>
+          </ul>
+        </div><!-- navbar-collapse -->
+      </div><!-- container-fluid -->
+    </nav>
+    <div class="container">
+      <h1>TD2 - BRDF de Ward</h1>
+
+      <h2>Eclairage direct</h2>
+      <p>
+        Dans cette première partie, il était simplement question d'implémenter le calcul de la BRDF de Ward dans la classe Ward. Une fois la formule implémentée, on peut faire varier les paramètres
+        AlphaX et AlphaY pour obtenir différents résultats, en voici quelques exemples :
+      </p>
+      <p><strong>aX = 0.01  aY = 0.01</strong></p>
+      <img src="sphereWard_001_001.png" alt="">
+      <p><strong>aX = 0.1  aY = 0.5</strong></p>
+      <img src="sphereWard_01_05.png" alt="">
+      <p><strong>aX = 0.5  aY = 0.1</strong></p>
+      <img src="sphereWard_05_01.png" alt="">
+
+      <h2>Échantillonnage uniforme de la BRDF</h2>
+      <p>
+        Ici, on se proposait de créer un nouvel intégrateur : DirectMats. Cet intégrateur utiliserait notre précédent calcul de la BRDF. Cette partie étant déjà incluse dans les fichiers originaux du TP,
+        on ne s'attardera pas dessus. Seules quelques lignes de codes étaient à modifier/commenter pour obtenir une compilation. Les résultats sur la sphère et l'envMap ci-dessous :
+      </p>
+      <p><strong>aX = 0.01  aY = 0.01</strong></p>
+      <img src="sphereWardEnvMap_001_001.png" alt="">
+      <p><strong>aX = 0.1  aY = 0.5</strong></p>
+      <img src="sphereWardEnvMap_01_05.png" alt="">
+      <p><strong>aX = 0.5  aY = 0.1</strong></p>
+      <img src="sphereWardEnvMap_05_01.png" alt="">
+
+      <h2>Échantillonnage préférentiel</h2>
+      <p>Maintenant, on se propose d'implémenter de l'importance sampling. Cette technique vise à concentrer l'échantillonnage dans une zone qui contribuera fortement au résultat
+      final. On aura donc moins de rayons "perdus" générant du bruit.</p>
+      <p>Il était tout d'abord question de tester l'effet de cet importance sampling en affichant les rayons générés. Voici quelques résultats en fonction de alphaX et aklphaY :</p>
+      <p><strong>aX = 0.01  aY = 0.01</strong></p>
+      <img src="Rays_001_001.png" alt="">
+      <p><strong>aX = 0.1  aY = 0.5</strong></p>
+      <img src="Rays_01_05.png" alt="">
+      <p><strong>aX = 0.5  aY = 0.1</strong></p>
+      <img src="Rays_05_01.png" alt="">
+
+      <p>Les résultats semblent cohérents, en particulier celui pour alphaX=alphaY=0.01. Cependant, il semble sur certaines image que les rayons ne couvrent qu'une moitié de
+      l'hémisphère. Ce phénomène est encore plus flagrant sur les images suivantes utilisant l'importance sampling pour la scène de la sphère. On voit bien une séparation
+       entre la partie supérieure de la sphère, correctement calculée, et la partie inférieure qui ne ressemble pas aux exemples de résultats de la page du TD. Je n'ai pas su
+       résoudre ce problème.</p>
+
+      <p><strong>aX = 0.01  aY = 0.01</strong></p>
+      <img src="sphereWardEnvMap_IS_001_001.png" alt="">
+      <p><strong>aX = 0.1  aY = 0.5</strong></p>
+      <img src="sphereWardEnvMap_IS_01_05.png" alt="">
+      <p><strong>aX = 0.5  aY = 0.1</strong></p>
+      <img src="sphereWardEnvMap_IS_05_01.png" alt="">
+
+    </div><!-- container -->
+  </body>
+</html>

@@ -1,0 +1,49 @@
+body {
+    font-family: 'Lato';
+    text-align: center;
+    background: rgb(212, 236, 244);
+}
+
+h3 {
+  font-size: 1.5em;
+  margin: 50px;
+}
+
+html {
+  height: 100%
+}
+
+.content {
+  background-color: white;
+  text-align: center;
+  padding: 3%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+
+hr {
+  width: 400px;
+  border-top: 1px solid #f8f8f8;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.link-list {
+  text-align: left;
+  font-size: 30px;
+}
+
+img {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+p {
+  text-align: left;
+  font-size: 1.3em;
+}

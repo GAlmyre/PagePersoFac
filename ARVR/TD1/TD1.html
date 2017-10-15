@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../mainStyle.css">
+    <title>Guillaume Almyre</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Guillaume Almyre</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Home</a></li>
+            <li class="active"><a href="index.html">AR-VR</a></li>
+          </ul>
+        </div><!-- navbar-collapse -->
+      </div><!-- container-fluid -->
+    </nav>
+    <div class="container">
+      <h1>TD1 - Navigation 3D et interactions simples</h1>
+      <h3>Une démonstration de l'application est disponible <a href="Exec/index.html">ici</a>.</h3>
+
+      <h2>Première scène 3D</h2>
+      <p>
+        Dans cette section, il était question d'utiliser Three JS pour créer une scène 3D simple. L'objectif principal était d'apprendre à charger des textures avec
+        la classe TextureLoader et de créer des matériaux à partir de celles-ci. Une fois ces matériaux créés, on peut créer des Mesh à partir d'une géométrie sur lesquels les appliquer.
+        En utilisant uniquement des cubes de taille 1*1*1, on obtient rapidement une scène utilisable.
+        Voici les deux fonction principales de cette partie :
+      </p>
+      <img src="td1_fig1.PNG" alt="">
+
+      <h2>Vue à la première personne</h2>
+      <p>
+        La première étape de cette partie consistait à permettre à la caméra de se déplacer, offrant à l'utilisateur une vue à la première personne. Pour réaliser
+        cela, il fallait gérer les appuis sur les touches du clavier à l'aide d'event listeners sur "keydown" et "keyup". En gardant à jour 4 booléens (un pour chaque
+        direction), on peut, dans la fonction animate(), déterminer dans quelle direction déplacer la caméra. Le déplacement est effectué grâce à une entité de type
+        PointerLockControls, qui gère l'utilisation de la souris pour "tourner la tête".
+        Voici le code dans animate() qui permet de déplacer le joueur.
+      </p>
+      <img src="td1_fig2.PNG" alt="">
+      <p>
+        L'étape suivante consiste à créer une interface minimaliste pour aider le jouer à se repérer. Dans ce cas, on se contente de créer une croix au centre de
+        l'écran afin de savoir vers quel point regarde notre caméra. Pour celà, on peut créer une nouvelle scène ainsi qu'une nouvelle caméra. La caméra doit être
+        de type orthographique car on ne veut pas avoir d'effet de perspective sur notre interface. On peut ensuite utiliser Three JS pour créer à la main les
+        sommets de notre géométrie et ainsi définir précisément des lignes. voici le résultat ainsi que la fonction qui déssine ce crosshair :
+      </p>
+      <img src="td1_fig3.PNG" alt="">
+      <img src="td1_fig4.PNG" alt="">
+
+      <h2>Sélèction d'un objet</h2>
+      <p>
+        Cette partie a été la plus difficile à réaliser, parfois par manque de références dans la documentation de Three JS. Le concept ici est de donner,
+        dans une scène non affichée à l'écran, une couleur unique à chaque objet de la scène. A chaque clic de souris, on regarde la couleur de l'objet touché,
+        on peut ensuite vérifier si elle correspond à celle de l'un de nos objets. Si c'est le cas, on peut déterminer que c'est bien sur cet objet que l'on
+        a cliqué. Cette technique utilise moins de ressources que le lancer de rayons car on peut demander à la carte graphique de faire le gros du travail et
+        ainsi soulager le processeur.
+        Pour réaliser cette technique on crée donc un offscreen buffer de type WebGLRenderTarget. Chaque objet possédant déjà un id grâce à Three JS, on peut
+        utiliser la fonction applyFaceColor donnée durant le TD en lui transmettant une géometrie et l'id de l'objet qui est construit.
+        En récupérant les clics de souris grâce à l'event listener 'mouseup', on peut choisir différentes actions en fonction du bouton pressé.
+        Voici la fonction appelée lors d'un clic de souris, elle détermine l'objet touché en récupérant la couleur du pixel sous le crosshair avec readRenderTargetPixels.
+        On convertis cette couleur depuis l'hexadécimal et on cherche si un objet de la scène possède cet id avec getObjectById. Ensuite on effectue une action en
+        fonction du bouton de la souris qui est pressé :
+      </p>
+      <img src="td1_fig5.PNG" alt="">
+      <p>Le clic droit détruit les cubes visés : </p>
+      <img src="td1_fig6.PNG" alt="">
+      <p>Le clic central crée un cube au dessus de celui visé : </p>
+      <img src="td1_fig7.PNG" alt="">
+    </div><!-- container -->
+  </body>
+</html>
